@@ -1,5 +1,6 @@
 package com.juaracoding.kepul.controller;
 
+import com.juaracoding.kepul.config.OtherConfig;
 import com.juaracoding.kepul.dto.validation.ValProductCategoryDTO;
 import com.juaracoding.kepul.service.ProductCategoryService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,9 +41,44 @@ public class ProductCategoryController {
 
     @GetMapping
     public ResponseEntity<Object> findAll(HttpServletRequest request) {
-        Pageable pageable = PageRequest.of(0, 50, Sort.by("id"));
+        Pageable pageable = PageRequest.of(0, OtherConfig.getPageDefault(), Sort.by("id"));
 
         return productCategoryService.findAll(pageable, request);
+    }
+
+    @GetMapping("/{id}")
+//    @PreAuthorize("hasAuthority('Group-Menu')")
+    public ResponseEntity<Object> findById(@PathVariable(value = "id") Long id, HttpServletRequest request) {
+        return productCategoryService.findById(id, request);
+    }
+
+    @GetMapping("/{sort}/{sortBy}/{page}")
+//    @PreAuthorize("hasAuthority('Group-Menu')")
+    public ResponseEntity<Object> findByParam(
+            @PathVariable(value = "sort") String sort,
+            @PathVariable(value = "sortBy") String sortBy,
+            @PathVariable(value = "page") Integer page,
+            @RequestParam(value = "size") Integer size,
+            @RequestParam(value = "column") String column,
+            @RequestParam(value = "value") String value,
+            HttpServletRequest request){
+
+        Pageable pageable = null;
+        sortBy = sortColumnByMap(sortBy);
+        switch (sort) {
+            case "asc":pageable = PageRequest.of(page, size, Sort.by(sortBy));break;
+            default: pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
+        }
+
+        return productCategoryService.findByParam(pageable, column, value, request);
+    }
+
+    private String sortColumnByMap(String sortBy){
+        switch (sortBy){
+            case "nama":sortBy = "nama";break;
+            default:sortBy = "id";
+        }
+        return sortBy;
     }
 
 }

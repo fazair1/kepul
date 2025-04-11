@@ -116,12 +116,32 @@ public class ProductCategoryService implements IService<ProductCategory> {
 
     @Override
     public ResponseEntity<Object> findById(Long id, HttpServletRequest request) {
-        return null;
+        Optional<ProductCategory> optionalProductCategory = null;
+        try {
+            optionalProductCategory = productCategoryRepo.findById(id);
+            if (!optionalProductCategory.isPresent()) {
+                return GlobalResponse.dataTidakDitemukan("KPL01FV041",request);
+            }
+        }catch (Exception e) {
+//            LoggingFile.logException("GroupMenuService","findById(Long id, HttpServletRequest request) -- Line 122 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
+            return GlobalResponse.terjadiKesalahan("KPL01FE041",request);
+        }
+        return GlobalResponse.dataDitemukan(modelMapper.map(optionalProductCategory.get(),RespProductCategoryDTO.class),request);
     }
 
     @Override
     public ResponseEntity<Object> findByParam(Pageable pageable, String columnName, String value, HttpServletRequest request) {
-        return null;
+        Page<ProductCategory> page = null;
+        List<ProductCategory> list = null;
+        switch (columnName) {
+            case "nama": page = productCategoryRepo.findByNamaContainsIgnoreCase(value,pageable);break;
+            default: page = productCategoryRepo.findAll(pageable);
+        }
+        list = page.getContent();
+        List<RespProductCategoryDTO> lt = convertToRespProductCategoryDTO(list);
+
+        return GlobalResponse.dataDitemukan(transformPagination.transformPagination(lt,page,columnName,value),
+                request);
     }
 
     public List<RespProductCategoryDTO> convertToRespProductCategoryDTO (List<ProductCategory> productCategories) {
