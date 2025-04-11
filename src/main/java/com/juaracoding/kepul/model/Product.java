@@ -2,6 +2,8 @@ package com.juaracoding.kepul.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 
@@ -22,6 +24,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "IDProductCategory", foreignKey = @ForeignKey(name = "fk-to-productcategory"))
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private ProductCategory productCategory;
 
     @Column(name = "CreatedBy",updatable = false, nullable = false)

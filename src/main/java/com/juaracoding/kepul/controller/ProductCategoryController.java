@@ -24,6 +24,20 @@ public class ProductCategoryController {
         return productCategoryService.save(productCategoryService.convertToEntity(valProductCategoryDTO), request);
     }
 
+    @PutMapping("/{id}")
+//    @PreAuthorize("hasAuthority('Group-Menu')")
+    public ResponseEntity<Object> update(@PathVariable(value = "id") Long id,
+                                         @Valid @RequestBody ValProductCategoryDTO valProductCategoryDTO, HttpServletRequest request) {
+        return productCategoryService.update(id, productCategoryService.convertToEntity(valProductCategoryDTO), request);
+    }
+
+    @DeleteMapping("/{id}")
+//    @PreAuthorize("hasAuthority('Group-Menu')")
+    public ResponseEntity<Object> delete(
+            @PathVariable(value = "id") Long id, HttpServletRequest request){
+        return productCategoryService.delete(id,request);
+    }
+
     @GetMapping
     public ResponseEntity<Object> findAll(HttpServletRequest request) {
         Pageable pageable = PageRequest.of(0, 50, Sort.by("id"));

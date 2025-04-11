@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "MstProductCategory")
@@ -16,6 +17,9 @@ public class ProductCategory {
 
     @Column(name = "Nama", nullable = false, length = 50, unique = true)
     private String nama;
+
+    @OneToMany(mappedBy = "productCategory", orphanRemoval = false)
+    private List<Product> products;
 
     @Column(name = "CreatedBy",updatable = false, nullable = false)
     private Long createdBy = 1L;
