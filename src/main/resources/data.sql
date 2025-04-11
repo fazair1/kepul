@@ -62,7 +62,7 @@ SET IDENTITY_INSERT [dbo].[MstAkses] ON
     SET IDENTITY_INSERT [dbo].[MstAkses] OFF
     ;
 
-    -- ----------------------------
+-- ----------------------------
 -- Records of MapAksesMenu
 -- ----------------------------
     INSERT INTO [dbo].[MapAksesMenu] ([IDAkses], [IDMenu]) VALUES (N'1', N'1')
@@ -89,6 +89,41 @@ SET IDENTITY_INSERT [dbo].[MstAkses] ON
     INSERT INTO [dbo].[MapAksesMenu] ([IDAkses], [IDMenu]) VALUES (N'2', N'6')
     ;
 
+-- ----------------------------
+-- Records of MstProductCategory
+-- ----------------------------
+SET IDENTITY_INSERT [dbo].[MstProductCategory] ON
+    ;
+
+    INSERT INTO [dbo].[MstProductCategory] ([CreatedBy], [CreatedDate], [IDCategory], [ModifiedBy], [ModifiedDate], [Nama]) VALUES (N'1', N'2025-03-10 18:32:05.000000', N'1', NULL, NULL, N'Furniture')
+    ;
+
+    INSERT INTO [dbo].[MstProductCategory] ([CreatedBy], [CreatedDate], [IDCategory], [ModifiedBy], [ModifiedDate], [Nama]) VALUES (N'1', N'2025-03-10 18:32:05.000000', N'2', NULL, NULL, N'Elektronik')
+    ;
+
+    INSERT INTO [dbo].[MstProductCategory] ([CreatedBy], [CreatedDate], [IDCategory], [ModifiedBy], [ModifiedDate], [Nama]) VALUES (N'1', N'2025-03-10 18:32:05.000000', N'3', NULL, NULL, N'Alat Tulis')
+    ;
+
+    SET IDENTITY_INSERT [dbo].[MstProductCategory] OFF
+    ;
+
+-- ----------------------------
+-- Records of MstProduct
+-- ----------------------------
+SET IDENTITY_INSERT [dbo].[MstProduct] ON
+    ;
+
+    INSERT INTO [dbo].[MstProduct] ([CreatedBy], [CreatedDate], [IDProduct], [ModifiedBy], [ModifiedDate], [Nama], [Deskripsi], [IDProductCategory]) VALUES (N'1', N'2025-03-10 18:32:05.000000', N'1', NULL, NULL, N'Kursi', N'Kursi warna abu-abu', N'1')
+    ;
+
+    INSERT INTO [dbo].[MstProduct] ([CreatedBy], [CreatedDate], [IDProduct], [ModifiedBy], [ModifiedDate], [Nama], [Deskripsi], [IDProductCategory]) VALUES (N'1', N'2025-03-10 18:32:05.000000', N'2', NULL, NULL, N'Laptop', N'Laptop merek ACER', N'2')
+    ;
+
+    INSERT INTO [dbo].[MstProduct] ([CreatedBy], [CreatedDate], [IDProduct], [ModifiedBy], [ModifiedDate], [Nama], [Deskripsi], [IDProductCategory]) VALUES (N'1', N'2025-03-10 18:32:05.000000', N'3', NULL, NULL, N'Pensil', N'Pensil 2b', N'3')
+    ;
+
+    SET IDENTITY_INSERT [dbo].[MstProductCategory] OFF
+    ;
 
     -- ----------------------------
 -- Records of MstUser
