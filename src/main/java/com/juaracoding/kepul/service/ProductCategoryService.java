@@ -1,14 +1,16 @@
 package com.juaracoding.kepul.service;
 
+import com.juaracoding.kepul.config.OtherConfig;
 import com.juaracoding.kepul.core.IService;
 import com.juaracoding.kepul.dto.response.RespProductCategoryDTO;
 import com.juaracoding.kepul.dto.validation.ValProductCategoryDTO;
 import com.juaracoding.kepul.handler.GlobalResponse;
-import com.juaracoding.kepul.model.Product;
 import com.juaracoding.kepul.model.ProductCategory;
 import com.juaracoding.kepul.repositories.ProductCategoryRepo;
 import com.juaracoding.kepul.repositories.ProductRepo;
+import com.juaracoding.kepul.security.RequestCapture;
 import com.juaracoding.kepul.util.GlobalFunction;
+import com.juaracoding.kepul.util.LoggingFile;
 import com.juaracoding.kepul.util.TransformPagination;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
@@ -52,10 +54,9 @@ public class ProductCategoryService implements IService<ProductCategory> {
 
         try {
             productCategory.setCreatedBy(Long.parseLong(mapToken.get("userId").toString()));
-//            productCategory.setCreatedBy(1L);
             productCategoryRepo.save(productCategory);
         }catch (Exception e) {
-//            LoggingFile.logException("GroupMenuService","save(GroupMenu groupMenu, HttpServletRequest request) -- Line 59 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
+            LoggingFile.logException("GroupMenuService","save(GroupMenu groupMenu, HttpServletRequest request) -- Line 59 "+ RequestCapture.allRequest(request),e, OtherConfig.getEnableLog());
             return GlobalResponse.dataGagalDisimpan("KPL01FE001",request);
 
         }

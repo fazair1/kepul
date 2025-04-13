@@ -9,6 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 public class OtherConfig {
 
     private static Integer pageDefault;
+    private static String enableLog;
 
     public static Integer getPageDefault() {
         return pageDefault;
@@ -17,6 +18,15 @@ public class OtherConfig {
     @Value("${page.default}")
     private void setPageDefault(Integer pageDefault) {
         OtherConfig.pageDefault = pageDefault;
+    }
+
+    public static String getEnableLog() {
+        return enableLog;
+    }
+
+    @Value("${enable.log}")
+    private void setEnableLog(String enableLog) {
+        this.enableLog = enableLog;
     }
 
 }
