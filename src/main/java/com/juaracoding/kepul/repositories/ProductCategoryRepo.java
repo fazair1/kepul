@@ -1,6 +1,5 @@
 package com.juaracoding.kepul.repositories;
 
-import com.juaracoding.kepul.model.GroupMenu;
 import com.juaracoding.kepul.model.ProductCategory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

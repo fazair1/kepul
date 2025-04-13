@@ -8,6 +8,7 @@ import com.juaracoding.kepul.model.Product;
 import com.juaracoding.kepul.model.ProductCategory;
 import com.juaracoding.kepul.repositories.ProductCategoryRepo;
 import com.juaracoding.kepul.repositories.ProductRepo;
+import com.juaracoding.kepul.util.GlobalFunction;
 import com.juaracoding.kepul.util.TransformPagination;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
@@ -47,11 +48,11 @@ public class ProductCategoryService implements IService<ProductCategory> {
 
     @Override
     public ResponseEntity<Object> save(ProductCategory productCategory, HttpServletRequest request) {
-//        Map<String,Object> mapToken = GlobalFunction.extractToken(request);
+        Map<String,Object> mapToken = GlobalFunction.extractToken(request);
 
         try {
-//            groupMenu.setCreatedBy(Long.parseLong(mapToken.get("userId").toString()));
-            productCategory.setCreatedBy(1L);
+            productCategory.setCreatedBy(Long.parseLong(mapToken.get("userId").toString()));
+//            productCategory.setCreatedBy(1L);
             productCategoryRepo.save(productCategory);
         }catch (Exception e) {
 //            LoggingFile.logException("GroupMenuService","save(GroupMenu groupMenu, HttpServletRequest request) -- Line 59 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());

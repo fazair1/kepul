@@ -21,11 +21,11 @@ public class Akses {
     @Column(name = "Deskripsi", nullable = false, length = 100)
     private String deskripsi;
 
-    @ManyToMany
-    @JoinTable(name = "MapAksesMenu", uniqueConstraints = @UniqueConstraint(name = "unq-akses-to-menu", columnNames = {"IDAkses", "IDMenu"}),
-        joinColumns = @JoinColumn(name = "IDAkses", foreignKey = @ForeignKey(name = "fk-toAkses")),
-        inverseJoinColumns = @JoinColumn(name = "IDMenu", foreignKey = @ForeignKey(name = "fk-toMenu")))
-    private List<Menu> ltMenu;
+//    @ManyToMany
+//    @JoinTable(name = "MapAksesMenu", uniqueConstraints = @UniqueConstraint(name = "unq-akses-to-menu", columnNames = {"IDAkses", "IDMenu"}),
+//        joinColumns = @JoinColumn(name = "IDAkses", foreignKey = @ForeignKey(name = "fk-toAkses")),
+//        inverseJoinColumns = @JoinColumn(name = "IDMenu", foreignKey = @ForeignKey(name = "fk-toMenu")))
+//    private List<Menu> ltMenu;
 
     @Column(name = "CreatedBy",updatable = false, nullable = false)
     private Long createdBy = 1L;
@@ -73,13 +73,13 @@ public class Akses {
         this.id = id;
     }
 
-    public List<Menu> getLtMenu() {
-        return ltMenu;
-    }
-
-    public void setLtMenu(List<Menu> ltMenu) {
-        this.ltMenu = ltMenu;
-    }
+//    public List<Menu> getLtMenu() {
+//        return ltMenu;
+//    }
+//
+//    public void setLtMenu(List<Menu> ltMenu) {
+//        this.ltMenu = ltMenu;
+//    }
 
     public Long getModifiedBy() {
         return modifiedBy;

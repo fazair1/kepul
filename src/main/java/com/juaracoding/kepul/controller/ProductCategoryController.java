@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,26 +21,27 @@ public class ProductCategoryController {
     private ProductCategoryService productCategoryService;
 
     @PostMapping
-//    @PreAuthorize("hasAuthority('Group-Menu')")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<Object> save(@Valid @RequestBody ValProductCategoryDTO valProductCategoryDTO, HttpServletRequest request) {
         return productCategoryService.save(productCategoryService.convertToEntity(valProductCategoryDTO), request);
     }
 
     @PutMapping("/{id}")
-//    @PreAuthorize("hasAuthority('Group-Menu')")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<Object> update(@PathVariable(value = "id") Long id,
                                          @Valid @RequestBody ValProductCategoryDTO valProductCategoryDTO, HttpServletRequest request) {
         return productCategoryService.update(id, productCategoryService.convertToEntity(valProductCategoryDTO), request);
     }
 
     @DeleteMapping("/{id}")
-//    @PreAuthorize("hasAuthority('Group-Menu')")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<Object> delete(
             @PathVariable(value = "id") Long id, HttpServletRequest request){
         return productCategoryService.delete(id,request);
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<Object> findAll(HttpServletRequest request) {
         Pageable pageable = PageRequest.of(0, OtherConfig.getPageDefault(), Sort.by("id"));
 
@@ -47,13 +49,13 @@ public class ProductCategoryController {
     }
 
     @GetMapping("/{id}")
-//    @PreAuthorize("hasAuthority('Group-Menu')")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<Object> findById(@PathVariable(value = "id") Long id, HttpServletRequest request) {
         return productCategoryService.findById(id, request);
     }
 
     @GetMapping("/{sort}/{sortBy}/{page}")
-//    @PreAuthorize("hasAuthority('Group-Menu')")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<Object> findByParam(
             @PathVariable(value = "sort") String sort,
             @PathVariable(value = "sortBy") String sortBy,

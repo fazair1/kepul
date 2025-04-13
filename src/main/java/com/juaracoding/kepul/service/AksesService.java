@@ -2,9 +2,7 @@ package com.juaracoding.kepul.service;
 
 import com.juaracoding.kepul.core.IService;
 import com.juaracoding.kepul.model.Akses;
-import com.juaracoding.kepul.model.Menu;
 import com.juaracoding.kepul.repositories.AksesRepo;
-import com.juaracoding.kepul.repositories.MenuRepo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
