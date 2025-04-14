@@ -41,9 +41,6 @@ public class ProductCategoryService implements IService<ProductCategory> {
     private ProductCategoryRepo productCategoryRepo;
 
     @Autowired
-    private ProductRepo productRepo;
-
-    @Autowired
     private ModelMapper modelMapper;
 
     @Autowired

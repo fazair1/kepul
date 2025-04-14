@@ -1,15 +1,22 @@
-package com.juaracoding.kepul.dto.response;
+package com.juaracoding.kepul.dto.validation;
 
 import com.juaracoding.kepul.dto.relation.RelProductCategoryDTO;
+import com.juaracoding.kepul.util.ConstantsMessage;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
-public class RespProductDTO {
+import java.util.List;
 
-    private Long id;
+public class ValProductDTO {
 
+    @Pattern(regexp = "^[\\w\\s]{3,50}$", message = ConstantsMessage.VAL_PRODUCT_CATEGORY_NAMA)
     private String nama;
 
+    @Pattern(regexp = "^[\\w\\s]{3,100}$", message = ConstantsMessage.VAL_PRODUCT_DESKRIPSI)
     private String deskripsi;
 
+    @NotNull(message = ConstantsMessage.VAL_PRODUCT_CATEGORY)
     private RelProductCategoryDTO productCategory;
 
     public String getDeskripsi() {
@@ -18,14 +25,6 @@ public class RespProductDTO {
 
     public void setDeskripsi(String deskripsi) {
         this.deskripsi = deskripsi;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNama() {

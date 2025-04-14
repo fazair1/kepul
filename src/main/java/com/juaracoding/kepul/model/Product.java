@@ -23,8 +23,8 @@ public class Product {
     private String deskripsi;
 
     /** ubah saat migrasi DB */
-    @Column(name = "IsTransferred",columnDefinition = ("bit default 0"))
-    private Boolean isTransferred=false;
+    @Column(name = "IsDeleted",columnDefinition = ("bit default 0"))
+    private Boolean isDeleted=false;
 
     @ManyToOne
     @JoinColumn(name = "IDProductCategory", foreignKey = @ForeignKey(name = "fk-to-productcategory"))
@@ -107,5 +107,13 @@ public class Product {
 
     public void setProductCategory(ProductCategory productCategory) {
         this.productCategory = productCategory;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 }
