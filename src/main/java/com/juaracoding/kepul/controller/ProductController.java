@@ -1,5 +1,6 @@
 package com.juaracoding.kepul.controller;
 
+import com.juaracoding.kepul.config.OtherConfig;
 import com.juaracoding.kepul.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,9 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('Admin')")
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('Member')")
     public ResponseEntity<Object> findAll(HttpServletRequest request) {
-        Pageable pageable = PageRequest.of(0, 50, Sort.by("id"));
+        Pageable pageable = PageRequest.of(0, OtherConfig.getPageDefault(), Sort.by("id"));
 
         return productService.findAll(pageable, request);
     }
