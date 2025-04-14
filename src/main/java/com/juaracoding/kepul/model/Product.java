@@ -16,11 +16,15 @@ public class Product {
     @Column(name = "IDProduct")
     private Long id;
 
-    @Column(name = "Nama", nullable = false, length = 50, unique = true)
+    @Column(name = "Nama", nullable = false, length = 50)
     private String nama;
 
     @Column(name = "Deskripsi", nullable = false, length = 100)
     private String deskripsi;
+
+    /** ubah saat migrasi DB */
+    @Column(name = "IsTransferred",columnDefinition = ("bit default 0"))
+    private Boolean isTransferred=false;
 
     @ManyToOne
     @JoinColumn(name = "IDProductCategory", foreignKey = @ForeignKey(name = "fk-to-productcategory"))
