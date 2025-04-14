@@ -135,12 +135,14 @@ public class AppUserDetailService implements UserDetailsService {
     public ResponseEntity<Object> verifyRegis(User user, HttpServletRequest request) {
         Optional<User> optUser = userRepo.findByEmail(user.getEmail());
         if(!optUser.isPresent()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Data Tidak Valid !!");
+            return GlobalResponse.dataTidakValid("AUT00FV021", request);
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Data Tidak Valid !!");
         }
         User userNext = optUser.get();
         /** OTP nya sudah Valid */
         if(!BcryptImpl.verifyHash(user.getOtp(),userNext.getOtp())){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("OTP Tidak Valid, Cek Email Anda !!");
+            return GlobalResponse.dataTidakValid("AUT00FV022", request);
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("OTP Tidak Valid, Cek Email Anda !!");
         }
         userNext.setRegistered(true);
         userNext.setModifiedBy(userNext.getId());
