@@ -10,6 +10,8 @@ public class OtherConfig {
 
     private static Integer pageDefault;
     private static String enableLog;
+    private static String enableAutomationTest;
+    private static String smtpEnable;
 
     public static Integer getPageDefault() {
         return pageDefault;
@@ -27,6 +29,23 @@ public class OtherConfig {
     @Value("${enable.log}")
     private void setEnableLog(String enableLog) {
         this.enableLog = enableLog;
+    }
+
+    public static String getEnableAutomationTest() {
+        return enableAutomationTest;
+    }
+
+    @Value("${enable.automation.test}")
+    private void setEnableAutomationTest(String enableAutomationTest) {
+        OtherConfig.enableAutomationTest = enableAutomationTest;
+    }
+
+    public static String getSmtpEnable() {
+        return smtpEnable;
+    }
+    @Value("${smtp.enable}")
+    private void setSmtpEnable(String smtpEnable) {
+        OtherConfig.smtpEnable = smtpEnable;
     }
 
 }
