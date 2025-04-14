@@ -15,9 +15,6 @@ public interface ProductCategoryRepo extends JpaRepository<ProductCategory, Long
     /** Ini untuk Report */
     public List<ProductCategory> findByNamaContainsIgnoreCase(String nama);
 
-    //    /** Select * From MstGroupMenu WHERE toLower(Email) Like toLower('%chihuy%') AND CreatedDate Between */
-//    public Page<GroupMenu> findByNamaContainsIgnoreCaseAndCreatedDateBetween(String nama, Pageable pageable,String from, String to);
-
     /** digunakan hanya untuk unit testing */
     public Optional<ProductCategory> findTopByOrderByIdDesc();
 

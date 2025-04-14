@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -52,12 +53,21 @@ public class ProductCategoryService implements IService<ProductCategory> {
     public ResponseEntity<Object> save(ProductCategory productCategory, HttpServletRequest request) {
         Map<String,Object> mapToken = GlobalFunction.extractToken(request);
 
+        if (productCategory == null) {
+            return GlobalResponse.dataTidakValid("KPL01FV001",request);
+        }
+
         try {
+            List<ProductCategory> listProductCategory = productCategoryRepo.findByNamaContainsIgnoreCase(productCategory.getNama());
+
+            if (!listProductCategory.isEmpty()) {
+                return GlobalResponse.dataHarusUnique("KPL01FV002",request);
+            }
             productCategory.setCreatedBy(Long.parseLong(mapToken.get("userId").toString()));
             productCategoryRepo.save(productCategory);
         }catch (Exception e) {
-            LoggingFile.logException("GroupMenuService","save(GroupMenu groupMenu, HttpServletRequest request) -- Line 59 "+ RequestCapture.allRequest(request),e, OtherConfig.getEnableLog());
-            return GlobalResponse.dataGagalDisimpan("KPL01FE001",request);
+            LoggingFile.logException("ProductCategoryService","save(ProductCategory productCategory, HttpServletRequest request) -- Line 69 "+ RequestCapture.allRequest(request),e, OtherConfig.getEnableLog());
+            return GlobalResponse.dataGagalDisimpan("KPL01FE003",request);
 
         }
         return GlobalResponse.dataBerhasilDisimpan(request);
@@ -65,7 +75,7 @@ public class ProductCategoryService implements IService<ProductCategory> {
 
     @Override
     public ResponseEntity<Object> update(Long id, ProductCategory productCategory, HttpServletRequest request) {
-//        Map<String,Object> mapToken = GlobalFunction.extractToken(request);
+        Map<String,Object> mapToken = GlobalFunction.extractToken(request);
 
         if (productCategory == null) {
             return GlobalResponse.dataTidakValid("KPL01FV011",request);
@@ -76,15 +86,21 @@ public class ProductCategoryService implements IService<ProductCategory> {
             if (!optionalProductCategory.isPresent()) {
                 return GlobalResponse.dataTidakDitemukan("KPL01FV012",request);
             }
+            List<ProductCategory> listProductCategory = productCategoryRepo.findByNamaContainsIgnoreCase(productCategory.getNama());
+
+            if (!listProductCategory.isEmpty()) {
+                return GlobalResponse.dataHarusUnique("KPL01FV013",request);
+            }
+            LocalDateTime now = LocalDateTime.now();
 
             ProductCategory nextProductCategory = optionalProductCategory.get();
-//            nextProductCategory.setModifiedBy(Long.parseLong(mapToken.get("userId").toString()));
-            nextProductCategory.setModifiedBy(1L);
+            nextProductCategory.setModifiedBy(Long.parseLong(mapToken.get("userId").toString()));
+            nextProductCategory.setModifiedDate(now);
             nextProductCategory.setNama(productCategory.getNama());
 
         }catch (Exception e) {
-//            LoggingFile.logException("GroupMenuService","update(Long id, GroupMenu groupMenu, HttpServletRequest request) -- Line 81 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
-            return GlobalResponse.dataGagalDiubah("KPL01FE011",request);
+            LoggingFile.logException("ProductCategoryService","update(Long id, ProductCategory productCategory, HttpServletRequest request) -- Line 102 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
+            return GlobalResponse.dataGagalDiubah("KPL01FE014",request);
         }
         return GlobalResponse.dataBerhasilDiubah(request);
     }
@@ -98,8 +114,8 @@ public class ProductCategoryService implements IService<ProductCategory> {
             }
             productCategoryRepo.deleteById(id);
         }catch (Exception e) {
-//            LoggingFile.logException("GroupMenuService","delete(Long id, HttpServletRequest request) -- Line 95 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
-            return GlobalResponse.dataGagalDihapus("KPL01FE021",request);
+            LoggingFile.logException("ProductCategoryService","delete(Long id, HttpServletRequest request) -- Line 117 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
+            return GlobalResponse.dataGagalDihapus("KPL01FE022",request);
         }
         return GlobalResponse.dataBerhasilDihapus(request);
     }
@@ -125,8 +141,8 @@ public class ProductCategoryService implements IService<ProductCategory> {
                 return GlobalResponse.dataTidakDitemukan("KPL01FV041",request);
             }
         }catch (Exception e) {
-//            LoggingFile.logException("GroupMenuService","findById(Long id, HttpServletRequest request) -- Line 122 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
-            return GlobalResponse.terjadiKesalahan("KPL01FE041",request);
+            LoggingFile.logException("ProductCategoryService","findById(Long id, HttpServletRequest request) -- Line 144 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
+            return GlobalResponse.terjadiKesalahan("KPL01FE042",request);
         }
         return GlobalResponse.dataDitemukan(modelMapper.map(optionalProductCategory.get(),RespProductCategoryDTO.class),request);
     }

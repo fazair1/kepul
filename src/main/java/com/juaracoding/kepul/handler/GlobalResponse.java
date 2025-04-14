@@ -29,6 +29,12 @@ public class GlobalResponse {
                 null,errorCode,request);
     }
 
+    public static ResponseEntity<Object> dataHarusUnique(String errorCode,HttpServletRequest request){
+        return new ResponseHandler().handleResponse("Sudah ada Data dengan Nama Tersebut",
+                HttpStatus.BAD_REQUEST,
+                null,errorCode,request);
+    }
+
     public static ResponseEntity<Object> dataTidakDitemukan(String errorCode,HttpServletRequest request){
         return new ResponseHandler().handleResponse("Data Tidak Ditemukan",
                 HttpStatus.BAD_REQUEST,
