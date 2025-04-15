@@ -117,7 +117,7 @@ public class TransactionService implements IService<Transaction> {
             nextTransaction.setModifiedBy(Long.parseLong(mapToken.get("userId").toString()));
             nextTransaction.setModifiedDate(now);
 
-            if (transaction.getStatus().getNama().equals("Wait for Approval")) {
+            if (transaction.getStatus().getNama().equals("Waiting for Approval")) {
                 nextTransaction.setLtProduct(transaction.getLtProduct());
             }
             if (transaction.getStatus().getNama().equals("Approved") && nextUser.getAkses().getNama().equals("Admin")) {
@@ -162,9 +162,18 @@ public class TransactionService implements IService<Transaction> {
 
     @Override
     public ResponseEntity<Object> findAll(Pageable pageable, HttpServletRequest request) {
+        Map<String,Object> mapToken = GlobalFunction.extractToken(request);
+        Optional<User> optionalUser = userRepo.findById(Long.parseLong(mapToken.get("userId").toString()));
+        User nextUser = optionalUser.get();
+
         Page<Transaction> page = null;
         List<Transaction> list = null;
-        page = transactionRepo.findAllByIsDeletedFalse(pageable);
+        if (nextUser.getAkses().getNama().equals("Member")) {
+            page = transactionRepo.cariDivisi(nextUser.getUsername(), pageable);
+        }
+        else {
+            page = transactionRepo.findAllByIsDeletedFalse(pageable);
+        }
         list = page.getContent();
         List<RespTransactionDTO> lt = convertToRespTransactionDTO(list);
 

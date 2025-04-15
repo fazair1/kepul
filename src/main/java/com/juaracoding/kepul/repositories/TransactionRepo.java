@@ -14,9 +14,10 @@ public interface TransactionRepo extends JpaRepository<Transaction, Long> {
     public Page<Transaction> findAllByIsDeletedFalse(Pageable pageable);
     public List<Transaction> findAllByIsDeletedFalse();
 
-    @Query(value = "SELECT x FROM Transaction x WHERE lower(x.divisionId.username) LIKE lower(concat('%',?1,'%')) ")
+
+    @Query(value = "SELECT x FROM Transaction x WHERE lower(x.divisionId.username) LIKE lower(concat('%',?1,'%')) AND x.isDeleted = false")
     public Page<Transaction> cariDivisi(String nama, Pageable pageable);
-    @Query(value = "SELECT x FROM Transaction x WHERE lower(x.divisionId.username) LIKE lower(concat('%',?1,'%')) ")
+    @Query(value = "SELECT x FROM Transaction x WHERE lower(x.divisionId.username) LIKE lower(concat('%',?1,'%')) AND x.isDeleted = false")
     public List<Transaction> cariDivisi(String nama);
 
     @Query(value = "SELECT x FROM Transaction x WHERE lower(x.adminId.username) LIKE lower(concat('%',?1,'%')) ")
