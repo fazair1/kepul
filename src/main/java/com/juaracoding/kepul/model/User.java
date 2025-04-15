@@ -69,7 +69,7 @@ public class User implements UserDetails{
     private LocalDateTime createdDate;
 
     @Column(name = "ModifiedBy",insertable = false)
-    private Long modifiedBy=1L;
+    private Long modifiedBy;
 
     @Column(name = "ModifiedDate",insertable = false)
     @UpdateTimestamp

@@ -7,25 +7,19 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "MstAkses")
-public class Akses {
+@Table(name = "MstStatus")
+public class Status {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IDAkses")
+    @Column(name = "IDStatus")
     private Long id;
 
-    @Column(name = "NamaAkses", unique = true, nullable = false, length = 20)
+    @Column(name = "Nama", nullable = false, length = 50, unique = true)
     private String nama;
 
-    @Column(name = "Deskripsi", nullable = false, length = 100)
-    private String deskripsi;
-
-//    @ManyToMany
-//    @JoinTable(name = "MapAksesMenu", uniqueConstraints = @UniqueConstraint(name = "unq-akses-to-menu", columnNames = {"IDAkses", "IDMenu"}),
-//        joinColumns = @JoinColumn(name = "IDAkses", foreignKey = @ForeignKey(name = "fk-toAkses")),
-//        inverseJoinColumns = @JoinColumn(name = "IDMenu", foreignKey = @ForeignKey(name = "fk-toMenu")))
-//    private List<Menu> ltMenu;
+    @OneToMany(mappedBy = "status", orphanRemoval = false)
+    private List<Transaction> transactions;
 
     @Column(name = "CreatedBy",updatable = false, nullable = false)
     private Long createdBy = 1L;
@@ -57,14 +51,6 @@ public class Akses {
         this.createdDate = createdDate;
     }
 
-    public String getDeskripsi() {
-        return deskripsi;
-    }
-
-    public void setDeskripsi(String deskripsi) {
-        this.deskripsi = deskripsi;
-    }
-
     public Long getId() {
         return id;
     }
@@ -72,14 +58,6 @@ public class Akses {
     public void setId(Long id) {
         this.id = id;
     }
-
-//    public List<Menu> getLtMenu() {
-//        return ltMenu;
-//    }
-//
-//    public void setLtMenu(List<Menu> ltMenu) {
-//        this.ltMenu = ltMenu;
-//    }
 
     public Long getModifiedBy() {
         return modifiedBy;
@@ -105,4 +83,3 @@ public class Akses {
         this.nama = nama;
     }
 }
-

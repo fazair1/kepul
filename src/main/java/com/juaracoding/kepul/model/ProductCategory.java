@@ -29,7 +29,7 @@ public class ProductCategory {
     private LocalDateTime createdDate;
 
     @Column(name = "ModifiedBy", insertable = false)
-    private Long modifiedBy = 1L;
+    private Long modifiedBy;
 
     @Column(name = "ModifiedDate", insertable = false)
     @CreationTimestamp

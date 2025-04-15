@@ -4,7 +4,6 @@ import com.juaracoding.kepul.config.OtherConfig;
 import com.juaracoding.kepul.core.IService;
 import com.juaracoding.kepul.dto.response.RespProductCategoryDTO;
 import com.juaracoding.kepul.dto.response.RespProductDTO;
-import com.juaracoding.kepul.dto.validation.ValProductCategoryDTO;
 import com.juaracoding.kepul.dto.validation.ValProductDTO;
 import com.juaracoding.kepul.handler.GlobalResponse;
 import com.juaracoding.kepul.model.Product;
@@ -22,7 +21,6 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -70,7 +68,7 @@ public class ProductService implements IService<Product> {
             product.setCreatedBy(Long.parseLong(mapToken.get("userId").toString()));
             productRepo.save(product);
         }catch (Exception e) {
-            LoggingFile.logException("ProductService","save(Product product, HttpServletRequest request) -- Line 48 "+ RequestCapture.allRequest(request),e, OtherConfig.getEnableLog());
+            LoggingFile.logException("ProductService","save(Product product, HttpServletRequest request) -- Line 71 "+ RequestCapture.allRequest(request),e, OtherConfig.getEnableLog());
             return GlobalResponse.dataGagalDisimpan("KPL02FE003",request);
 
         }
@@ -106,7 +104,7 @@ public class ProductService implements IService<Product> {
             nextProduct.setProductCategory(product.getProductCategory());
 
         }catch (Exception e) {
-            LoggingFile.logException("ProductCategoryService","update(Long id, ProductCategory productCategory, HttpServletRequest request) -- Line 102 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
+            LoggingFile.logException("ProductService","update(Long id, Product product, HttpServletRequest request) -- Line 107 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
             return GlobalResponse.dataGagalDiubah("KPL02FE014",request);
         }
         return GlobalResponse.dataBerhasilDiubah(request);
@@ -128,7 +126,7 @@ public class ProductService implements IService<Product> {
             nextProduct.setModifiedDate(now);
             nextProduct.setDeleted(true);
         }catch (Exception e) {
-            LoggingFile.logException("ProductCategoryService","delete(Long id, HttpServletRequest request) -- Line 117 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
+            LoggingFile.logException("ProductService","delete(Long id, HttpServletRequest request) -- Line 129 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
             return GlobalResponse.dataGagalDihapus("KPL02FE022",request);
         }
         return GlobalResponse.dataBerhasilDihapus(request);
@@ -155,7 +153,7 @@ public class ProductService implements IService<Product> {
                 return GlobalResponse.dataTidakDitemukan("KPL02FV041",request);
             }
         }catch (Exception e) {
-            LoggingFile.logException("ProductCategoryService","findById(Long id, HttpServletRequest request) -- Line 144 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
+            LoggingFile.logException("ProductService","findById(Long id, HttpServletRequest request) -- Line 156 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
             return GlobalResponse.terjadiKesalahan("KPL02FE042",request);
         }
         return GlobalResponse.dataDitemukan(modelMapper.map(optionalProduct.get(),RespProductCategoryDTO.class),request);

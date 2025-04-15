@@ -2,6 +2,8 @@ package com.juaracoding.kepul.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,11 +17,21 @@ public class Transaction {
     @Column(name = "IDTransaction")
     private Long id;
 
-    @Column(name = "IDDivision", nullable = false)
-    private Long divisionId;
+    @ManyToOne
+    @JoinColumn(name = "IDStatus", foreignKey = @ForeignKey(name = "fk-transaction-to-status"))
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    private Status status;
 
-    @Column(name = "IDAdmin")
-    private Long adminId;
+    @ManyToOne
+    @JoinColumn(name = "IDDivision",nullable = false, foreignKey = @ForeignKey(name = "fk-transaction-to-user1"))
+    private User divisionId;
+
+    @ManyToOne
+    @JoinColumn(name = "IDAdmin", foreignKey = @ForeignKey(name = "fk-transaction-to-user2"))
+    private User adminId;
+
+    @Column(name = "IsDeleted",columnDefinition = ("bit default 0"))
+    private Boolean isDeleted=false;
 
     @ManyToMany
     @JoinTable(name = "TransactionDetail", uniqueConstraints = @UniqueConstraint(name = "unq-transaction-to-product", columnNames = {"IDTransaction", "IDProduct"}),
@@ -35,18 +47,42 @@ public class Transaction {
     private LocalDateTime createdDate;
 
     @Column(name = "ModifiedBy", insertable = false)
-    private Long modifiedBy = 1L;
+    private Long modifiedBy;
 
     @Column(name = "ModifiedDate", insertable = false)
     @CreationTimestamp
     private LocalDateTime modifiedDate;
 
-    public Long getAdminId() {
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public User getAdminId() {
         return adminId;
     }
 
-    public void setAdminId(Long adminId) {
+    public void setAdminId(User adminId) {
         this.adminId = adminId;
+    }
+
+    public User getDivisionId() {
+        return divisionId;
+    }
+
+    public void setDivisionId(User divisionId) {
+        this.divisionId = divisionId;
     }
 
     public Long getCreatedBy() {
@@ -63,14 +99,6 @@ public class Transaction {
 
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
-    }
-
-    public Long getDivisionId() {
-        return divisionId;
-    }
-
-    public void setDivisionId(Long divisionId) {
-        this.divisionId = divisionId;
     }
 
     public Long getId() {

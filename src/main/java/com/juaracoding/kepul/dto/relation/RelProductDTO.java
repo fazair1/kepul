@@ -1,6 +1,6 @@
 package com.juaracoding.kepul.dto.relation;
 
-public class RelProductCategoryDTO {
+public class RelProductDTO {
 
     private Long id;
 
