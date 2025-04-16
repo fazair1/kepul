@@ -1,8 +1,10 @@
 package com.juaracoding.kepul.controller;
 
 import com.juaracoding.kepul.config.OtherConfig;
+import com.juaracoding.kepul.dto.validation.ValRegisDTO;
 import com.juaracoding.kepul.dto.validation.ValTransactionDTO;
-import com.juaracoding.kepul.service.TransactionService;
+import com.juaracoding.kepul.dto.validation.ValUserDTO;
+import com.juaracoding.kepul.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,44 +16,44 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("transaction")
-public class TransactionController {
+@RequestMapping("user")
+public class UserController {
 
     @Autowired
-    TransactionService transactionService;
+    UserService userService;
 
     @PostMapping
-    @PreAuthorize("hasAuthority('Admin') or hasAuthority('Member')")
-    public ResponseEntity<Object> save(@Valid @RequestBody ValTransactionDTO valTransactionDTO, HttpServletRequest request) {
-        return transactionService.save(transactionService.convertToEntity(valTransactionDTO), request);
+    @PreAuthorize("hasAuthority('Admin')")
+    public ResponseEntity<Object> save(@Valid @RequestBody ValUserDTO valUserDTO, HttpServletRequest request) {
+        return userService.save(userService.convertToEntity(valUserDTO), request);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('Admin') or hasAuthority('Member')")
     public ResponseEntity<Object> update(@PathVariable(value = "id") Long id,
-                                         @Valid @RequestBody ValTransactionDTO valTransactionDTO, HttpServletRequest request) {
-        return transactionService.update(id, transactionService.convertToEntity(valTransactionDTO), request);
+                                         @Valid @RequestBody ValUserDTO valUserDTO, HttpServletRequest request) {
+        return userService.update(id, userService.convertToEntity(valUserDTO), request);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<Object> delete(
             @PathVariable(value = "id") Long id, HttpServletRequest request){
-        return transactionService.delete(id,request);
+        return userService.delete(id,request);
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('Admin') or hasAuthority('Member')")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<Object> findAll(HttpServletRequest request) {
         Pageable pageable = PageRequest.of(0, OtherConfig.getPageDefault(), Sort.by("id"));
 
-        return transactionService.findAll(pageable, request);
+        return userService.findAll(pageable, request);
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<Object> findById(@PathVariable(value = "id") Long id, HttpServletRequest request) {
-        return transactionService.findById(id, request);
+        return userService.findById(id, request);
     }
 
     @GetMapping("/{sort}/{sortBy}/{page}")
@@ -72,14 +74,16 @@ public class TransactionController {
             default: pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
         }
 
-        return transactionService.findByParam(pageable, column, value, request);
+        return userService.findByParam(pageable, column, value, request);
     }
 
     private String sortColumnByMap(String sortBy){
         switch (sortBy){
-            case "divisi":sortBy = "divisi";break;
-            case "admin":sortBy = "admin";break;
-            case "status":sortBy = "status";break;
+            case "username": sortBy = "username";break;
+            case "email": sortBy = "email";break;
+            case "alamat": sortBy = "alamat";break;
+            case "nohp": sortBy = "nohp";break;
+            case "nama": sortBy = "nama";break;
             default:sortBy = "id";
         }
         return sortBy;

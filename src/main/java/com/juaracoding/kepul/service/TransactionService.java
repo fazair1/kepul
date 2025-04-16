@@ -83,7 +83,7 @@ public class TransactionService implements IService<Transaction> {
             transaction.setCreatedBy(Long.parseLong(mapToken.get("userId").toString()));
             transactionRepo.save(transaction);
         }catch (Exception e) {
-            LoggingFile.logException("TransactionService","save(Transaction transaction, HttpServletRequest request) -- Line 69 "+ RequestCapture.allRequest(request),e, OtherConfig.getEnableLog());
+            LoggingFile.logException("TransactionService","save(Transaction transaction, HttpServletRequest request) -- Line 86 "+ RequestCapture.allRequest(request),e, OtherConfig.getEnableLog());
             return GlobalResponse.dataGagalDisimpan("KPL03FE003",request);
 
         }
@@ -131,7 +131,7 @@ public class TransactionService implements IService<Transaction> {
                 }
             }
         }catch (Exception e) {
-            LoggingFile.logException("ProductService","update(Long id, Product product, HttpServletRequest request) -- Line 107 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
+            LoggingFile.logException("TransactionService","update(Long id, Transaction transaction, HttpServletRequest request) -- Line 134 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
             return GlobalResponse.dataGagalDiubah("KPL03FE014",request);
         }
         return GlobalResponse.dataBerhasilDiubah(request);
@@ -154,7 +154,7 @@ public class TransactionService implements IService<Transaction> {
             nextTransaction.setDeleted(true);
 
         }catch (Exception e) {
-            LoggingFile.logException("ProductService","delete(Long id, HttpServletRequest request) -- Line 129 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
+            LoggingFile.logException("TransactionService","delete(Long id, HttpServletRequest request) -- Line 157 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
             return GlobalResponse.dataGagalDihapus("KPL03FE022",request);
         }
         return GlobalResponse.dataBerhasilDihapus(request);
@@ -190,7 +190,7 @@ public class TransactionService implements IService<Transaction> {
                 return GlobalResponse.dataTidakDitemukan("KPL03FV041",request);
             }
         }catch (Exception e) {
-            LoggingFile.logException("ProductService","findById(Long id, HttpServletRequest request) -- Line 156 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
+            LoggingFile.logException("TransactionService","findById(Long id, HttpServletRequest request) -- Line 193 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
             return GlobalResponse.terjadiKesalahan("KPL03FE042",request);
         }
         return GlobalResponse.dataDitemukan(modelMapper.map(optionalTransaction.get(),RespTransactionDTO.class),request);
