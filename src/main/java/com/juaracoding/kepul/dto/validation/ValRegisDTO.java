@@ -17,10 +17,8 @@ public class ValRegisDTO {
             message = "Format Huruf kecil ,numeric dan titik saja min 4 max 20 karakter, contoh : fauzan.123")
     private String username;
 
-//    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",
-//            message = "Format minimal 1 angka, 1 huruf, min 8 karakter, contoh : aB4$12345")
-    @Pattern(regexp = "^([a-z0-9\\.]{4,20})$",
-            message = "Format Huruf kecil ,numeric dan titik saja min 4 max 20 karakter, contoh : fauzan.123")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",
+            message = "Format minimal 1 angka, 1 huruf, min 8 karakter, contoh : aB4$12345")
     private String password;
 
     @Pattern(regexp = "^(?=.{1,256})(?=.{1,64}@.{1,255}$)(?:(?![.])[a-zA-Z0-9._%+-]+(?:(?<!\\\\)[.][a-zA-Z0-9-]+)*?)@[a-zA-Z0-9.-]+(?:\\.[a-zA-Z]{2,50})+$",
