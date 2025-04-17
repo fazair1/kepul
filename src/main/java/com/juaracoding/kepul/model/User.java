@@ -31,9 +31,9 @@ public class User implements UserDetails{
     private String password;
     @Column(name = "Email",length = 64,nullable = false,unique = true)
     private String email;
-    @Column(name = "Alamat",length = 255,nullable = false)
+    @Column(name = "Alamat",length = 255)
     private String alamat;
-    @Column(name = "NoHp",length = 13,nullable = false,unique = true)
+    @Column(name = "NoHp",length = 13,unique = true)
     private String noHp;
     @Column(name = "Nama" , length = 50, nullable = false)
     private String nama;

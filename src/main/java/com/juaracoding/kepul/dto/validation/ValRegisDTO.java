@@ -25,20 +25,20 @@ public class ValRegisDTO {
             message = "Format tidak valid contoh : user_name123@sub.domain.com")
     private String email;
 
-    @Pattern(regexp = "^[\\w\\s\\.\\,]{10,255}$",
-            message = "Format Alamat Tidak Valid min 10 maks 255, contoh : Jln. Kenari 2B jakbar 11480")
-    private String alamat;
+//    @Pattern(regexp = "^[\\w\\s\\.\\,]{10,255}$",
+//            message = "Format Alamat Tidak Valid min 10 maks 255, contoh : Jln. Kenari 2B jakbar 11480")
+//    private String alamat;
 
-    @Pattern(regexp = "^(62|\\+62|0)8[0-9]{9,13}$",
-            message = "Format No HP Tidak Valid , min 9 max 13 setelah angka 8, contoh : (0/62/+62)81111111")
-    @JsonProperty("no-hp")
-    private String noHp;
+//    @Pattern(regexp = "^(62|\\+62|0)8[0-9]{9,13}$",
+//            message = "Format No HP Tidak Valid , min 9 max 13 setelah angka 8, contoh : (0/62/+62)81111111")
+//    @JsonProperty("no-hp")
+//    private String noHp;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonProperty("tanggal-lahir")
-    private LocalDate tanggalLahir;
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+//    @JsonDeserialize(using = LocalDateDeserializer.class)
+//    @JsonSerialize(using = LocalDateSerializer.class)
+//    @JsonProperty("tanggal-lahir")
+//    private LocalDate tanggalLahir;
 
     @Pattern(regexp = "^[a-zA-Z\\s]{4,50}$",message = "Hanya Alfabet dan spasi Minimal 4 Maksimal 50")
     private String nama;
@@ -51,13 +51,13 @@ public class ValRegisDTO {
         this.nama = nama;
     }
 
-    public LocalDate getTanggalLahir() {
-        return tanggalLahir;
-    }
-
-    public void setTanggalLahir(LocalDate tanggalLahir) {
-        this.tanggalLahir = tanggalLahir;
-    }
+//    public LocalDate getTanggalLahir() {
+//        return tanggalLahir;
+//    }
+//
+//    public void setTanggalLahir(LocalDate tanggalLahir) {
+//        this.tanggalLahir = tanggalLahir;
+//    }
 
     public String getUsername() {
         return username;
@@ -83,19 +83,19 @@ public class ValRegisDTO {
         this.email = email;
     }
 
-    public String getAlamat() {
-        return alamat;
-    }
-
-    public void setAlamat(String alamat) {
-        this.alamat = alamat;
-    }
-
-    public String getNoHp() {
-        return noHp;
-    }
-
-    public void setNoHp(String noHp) {
-        this.noHp = noHp;
-    }
+//    public String getAlamat() {
+//        return alamat;
+//    }
+//
+//    public void setAlamat(String alamat) {
+//        this.alamat = alamat;
+//    }
+//
+//    public String getNoHp() {
+//        return noHp;
+//    }
+//
+//    public void setNoHp(String noHp) {
+//        this.noHp = noHp;
+//    }
 }
