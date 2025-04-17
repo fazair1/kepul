@@ -64,10 +64,10 @@ SET IDENTITY_INSERT [dbo].[MstProduct] ON
 SET IDENTITY_INSERT [dbo].[MstUser] ON
     ;
 
-    INSERT INTO [dbo].[MstUser] ([IsRegistered], [TanggalLahir], [CreatedBy], [CreatedDate], [IDAkses], [IDUser], [ModifiedBy], [ModifiedDate], [NoHp], [username], [Nama], [OTP], [Password], [Email], [Alamat], [LinkProfilePicture], [ProfilePicture]) VALUES (N'1', N'2002-12-12', N'1', N'2025-03-07 21:41:59.211000', N'1', N'1', NULL, NULL, N'081286111111', N'admin.123', N'Admin Username', N'$2a$11$u.uyJ4mOI1xsol0YdqzXf.ncaS0GMncqXq3yBS6prjgtMlRr2Lyj6', N'$2a$11$uppIarADlxgvOonkvZdBLuciv9HLL12/QiNOK/zE2BWfkngm9ELK.', N'admin.123@gmail.com', N'Tangsel Tangsel Tangsel Tangsel Tangsel', NULL, NULL)
+    INSERT INTO [dbo].[MstUser] ([IsRegistered], [TanggalLahir], [CreatedBy], [CreatedDate], [IDAkses], [IDUser], [ModifiedBy], [ModifiedDate], [NoHp], [username], [Nama], [OTP], [Password], [Email], [Alamat], [LinkProfilePicture], [ProfilePicture]) VALUES (N'1', N'2002-12-12', N'1', N'2025-03-07 21:41:59.211000', N'1', N'1', NULL, NULL, N'081286111111', N'admin.123', N'Admin Username', N'$2a$11$u.uyJ4mOI1xsol0YdqzXf.ncaS0GMncqXq3yBS6prjgtMlRr2Lyj6', N'$2a$11$yyG9InToxNi1l/bovwz6PuCPyzE.bV/l.v/usJ7VinOGhhVxQy7J6', N'admin.123@gmail.com', N'Tangsel Tangsel Tangsel Tangsel Tangsel', NULL, NULL)
     ;
 
-    INSERT INTO [dbo].[MstUser] ([IsRegistered], [TanggalLahir], [CreatedBy], [CreatedDate], [IDAkses], [IDUser], [ModifiedBy], [ModifiedDate], [NoHp], [username], [Nama], [OTP], [Password], [Email], [Alamat], [LinkProfilePicture], [ProfilePicture]) VALUES (N'1', N'2002-12-12', N'1', N'2025-03-07 21:41:59.211000', N'2', N'2', NULL, NULL, N'081286111112', N'member.123', N'Member Username', N'$2a$11$u.uyJ4mOI1xsol0YdqzXf.ncaS0GMncqXq3yBS6prjgtMlRr2Lyj6', N'$2a$11$aySe9JOkUlGuu9Q5aK7No.uKkUqWuFEYTfPD6BzfpHDB7eOS5Gfza', N'member.123@gmail.com', N'Jakarta Tangsel Tangsel Tangsel Tangsel', NULL, NULL)
+    INSERT INTO [dbo].[MstUser] ([IsRegistered], [TanggalLahir], [CreatedBy], [CreatedDate], [IDAkses], [IDUser], [ModifiedBy], [ModifiedDate], [NoHp], [username], [Nama], [OTP], [Password], [Email], [Alamat], [LinkProfilePicture], [ProfilePicture]) VALUES (N'1', N'2002-12-12', N'1', N'2025-03-07 21:41:59.211000', N'2', N'2', NULL, NULL, N'081286111112', N'member.123', N'Member Username', N'$2a$11$u.uyJ4mOI1xsol0YdqzXf.ncaS0GMncqXq3yBS6prjgtMlRr2Lyj6', N'$2a$11$SV5suDoAAn7C9lbfTq581.ZE173Lg8bQHwGXMSs1SWQP8gr11jleu', N'member.123@gmail.com', N'Jakarta Tangsel Tangsel Tangsel Tangsel', NULL, NULL)
     ;
 
     SET IDENTITY_INSERT [dbo].[MstUser] OFF
