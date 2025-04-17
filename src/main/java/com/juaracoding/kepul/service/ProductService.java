@@ -1,7 +1,9 @@
 package com.juaracoding.kepul.service;
 
 import com.juaracoding.kepul.config.OtherConfig;
+import com.juaracoding.kepul.core.IReport;
 import com.juaracoding.kepul.core.IService;
+import com.juaracoding.kepul.dto.report.RepProductDTO;
 import com.juaracoding.kepul.dto.response.RespProductCategoryDTO;
 import com.juaracoding.kepul.dto.response.RespProductDTO;
 import com.juaracoding.kepul.dto.validation.ValProductDTO;
@@ -13,8 +15,10 @@ import com.juaracoding.kepul.repositories.ProductRepo;
 import com.juaracoding.kepul.security.RequestCapture;
 import com.juaracoding.kepul.util.GlobalFunction;
 import com.juaracoding.kepul.util.LoggingFile;
+import com.juaracoding.kepul.util.PdfGenerator;
 import com.juaracoding.kepul.util.TransformPagination;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -23,11 +27,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  *  Platform Code  - KPL
@@ -37,7 +41,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class ProductService implements IService<Product> {
+public class ProductService implements IService<Product>, IReport<Product> {
 
     @Autowired
     private ProductRepo productRepo;
@@ -50,6 +54,12 @@ public class ProductService implements IService<Product> {
 
     @Autowired
     private TransformPagination transformPagination;
+
+    @Autowired
+    private SpringTemplateEngine springTemplateEngine;
+
+    @Autowired
+    private PdfGenerator pdfGenerator;
 
     @Override
     public ResponseEntity<Object> save(Product product, HttpServletRequest request) {
@@ -176,26 +186,87 @@ public class ProductService implements IService<Product> {
                 request);
     }
 
+    @Override
+    public void generateToPDF(String column, String value, HttpServletRequest request, HttpServletResponse response) {
+        Map<String,Object> mapToken = GlobalFunction.extractToken(request);
+        List<Product> productList = null;
+        switch (column){
+            case "nama": productList = productRepo.findByNamaContainsIgnoreCase(value);break;
+            case "deskripsi": productList = productRepo.findByDeskripsiContainsIgnoreCase(value);break;
+            case "category": productList = productRepo.cariCategory(value);break;
+            default: productList = productRepo.findAll();
+        }
+
+        List<RepProductDTO> lt = convertToRepProductDTO(productList);
+        if(lt.isEmpty()){
+            GlobalResponse.manualResponse(response,GlobalResponse.dataTidakDitemukan("USM02FV061",request));
+            return;
+        }
+        int intRepProductDTOList = lt.size();
+        Map<String,Object> map = new HashMap<>();// ini untuk menampung seluruh data yang akan di oper ke file html
+        String strHtml = null;
+        Context context = new Context();
+        Map<String,Object> mapColumnName = GlobalFunction.convertClassToMap(new RepProductDTO());// ini diubah
+        List<String> listTemp = new ArrayList<>();
+        List<String> listHelper = new ArrayList<>();
+        for (Map.Entry<String,Object> entry : mapColumnName.entrySet()) {
+            listTemp.add(GlobalFunction.camelToStandard(entry.getKey()));
+            listHelper.add(entry.getKey());
+        }
+        Map<String,Object> mapTemp = null;
+        List<Map<String,Object>> listMap = new ArrayList<>();
+        for(int i=0;i<intRepProductDTOList;i++){
+            mapTemp = GlobalFunction.convertClassToMap(lt.get(i));
+            listMap.add(mapTemp);
+        }
+
+        map.put("title","REPORT DATA PRODUCT");
+        map.put("listKolom",listTemp);
+        map.put("listHelper",listHelper);
+        map.put("timestamp",LocalDateTime.now());
+        map.put("totalData",intRepProductDTOList);
+        map.put("listContent",listMap);
+        map.put("username",mapToken.get("namaLengkap"));
+        context.setVariables(map);
+        strHtml = springTemplateEngine.process("/report/global-report",context);
+        pdfGenerator.htmlToPdf(strHtml,"product",response);
+
+    }
+
     public Product convertToEntity (ValProductDTO valProductDTO) {
-//        GroupMenu groupMenu = new GroupMenu();
-//        groupMenu.setNama(valGroupMenuDTO.getNama());
-//        groupMenu.setDeskripsi(valGroupMenuDTO.getDeskripsi());
+//        Product groupMenu = new Product();
+//        groupMenu.setNama(valProductDTO.getNama());
+//        groupMenu.setDeskripsi(valProductDTO.getDeskripsi());
         Product product = modelMapper.map(valProductDTO, Product.class);
         return product;
     }
 
     public List<RespProductDTO> convertToRespProductDTO (List<Product> products) {
-//        List<RespGroupMenuDTO> respGroupMenuDTOList = new ArrayList<>();
+//        List<RespProductDTO> respProductDTOList = new ArrayList<>();
 //
-//        for (GroupMenu groupMenu: groupMenus) {
-//            RespGroupMenuDTO respGroupMenuDTO = new RespGroupMenuDTO();
-//            respGroupMenuDTO.setId(groupMenu.getId());
-//            respGroupMenuDTO.setNama(groupMenu.getNama());
-//            respGroupMenuDTO.setDeskripsi(groupMenu.getDeskripsi());
-//            respGroupMenuDTOList.add(respGroupMenuDTO);
+//        for (Product groupMenu: groupMenus) {
+//            RespProductDTO respProductDTO = new RespProductDTO();
+//            respProductDTO.setId(groupMenu.getId());
+//            respProductDTO.setNama(groupMenu.getNama());
+//            respProductDTO.setDeskripsi(groupMenu.getDeskripsi());
+//            respProductDTOList.add(respProductDTO);
 //        }
         List<RespProductDTO> respProductDTOList = modelMapper.map(products, new TypeToken<List<RespProductDTO>>() {}.getType());
         return respProductDTOList;
+    }
+
+    public List<RepProductDTO> convertToRepProductDTO(List<Product> products) {
+        List<RepProductDTO> lt = new ArrayList<>();
+        for (Product product : products) {
+            Object object = product.getProductCategory();//untuk handling jika nilainya berisi null
+            RepProductDTO repProductDTO = new RepProductDTO();
+            repProductDTO.setId(product.getId());
+            repProductDTO.setNama(product.getNama());
+            repProductDTO.setDeskripsi(product.getDeskripsi());
+            repProductDTO.setNamaCategory(object==null?"":product.getProductCategory().getNama());//ternary operator untuk handling null value
+            lt.add(repProductDTO);
+        }
+        return lt;
     }
 
 }

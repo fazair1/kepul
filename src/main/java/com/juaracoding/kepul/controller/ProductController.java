@@ -5,6 +5,7 @@ import com.juaracoding.kepul.dto.validation.ValProductCategoryDTO;
 import com.juaracoding.kepul.dto.validation.ValProductDTO;
 import com.juaracoding.kepul.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -74,6 +75,16 @@ public class ProductController {
         }
 
         return productService.findByParam(pageable, column, value, request);
+    }
+
+    @GetMapping("/pdf")
+    @PreAuthorize("hasAuthority('Admin')")
+    public void downloadPdf(
+            @RequestParam(value = "column") String column,
+            @RequestParam(value = "value") String value,
+            HttpServletRequest request,
+            HttpServletResponse response){
+        productService.generateToPDF(column,value,request,response);
     }
 
     private String sortColumnByMap(String sortBy){

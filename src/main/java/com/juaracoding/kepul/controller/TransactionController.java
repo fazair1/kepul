@@ -4,6 +4,7 @@ import com.juaracoding.kepul.config.OtherConfig;
 import com.juaracoding.kepul.dto.validation.ValTransactionDTO;
 import com.juaracoding.kepul.service.TransactionService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -73,6 +74,16 @@ public class TransactionController {
         }
 
         return transactionService.findByParam(pageable, column, value, request);
+    }
+
+    @GetMapping("/pdf")
+    @PreAuthorize("hasAuthority('Admin')")
+    public void downloadPdf(
+            @RequestParam(value = "column") String column,
+            @RequestParam(value = "value") String value,
+            HttpServletRequest request,
+            HttpServletResponse response){
+        transactionService.generateToPDFManual(column,value,request,response);
     }
 
     private String sortColumnByMap(String sortBy){
