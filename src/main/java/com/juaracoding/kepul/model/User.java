@@ -33,7 +33,7 @@ public class User implements UserDetails{
     private String email;
     @Column(name = "Alamat",length = 255)
     private String alamat;
-    @Column(name = "NoHp",length = 13,unique = true)
+    @Column(name = "NoHp",length = 13)
     private String noHp;
     @Column(name = "Nama" , length = 50, nullable = false)
     private String nama;

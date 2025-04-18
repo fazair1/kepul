@@ -23,6 +23,12 @@ public class GlobalResponse {
                 null,null,request);
     }
 
+    public static ResponseEntity<Object> dataBerhasilDiregistrasi(Object object, HttpServletRequest request){
+        return new ResponseHandler().handleResponse("Data Berhasil Diregistrasi",
+                HttpStatus.CREATED,
+                object,null,request);
+    }
+
     public static ResponseEntity<Object> dataTidakValid(String errorCode,HttpServletRequest request){
         return new ResponseHandler().handleResponse("Data Tidak Valid",
                 HttpStatus.BAD_REQUEST,

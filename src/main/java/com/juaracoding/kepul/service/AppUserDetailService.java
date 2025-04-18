@@ -119,7 +119,7 @@ public class AppUserDetailService implements UserDetailsService {
         }
 
         if(OtherConfig.getEnableAutomationTest().equals("y")){
-            m.put("otp",intOtp);//ini digunakan hanya untuk automation testing ataupun unit testing saja....
+            m.put("otp",String.valueOf(intOtp));//ini digunakan hanya untuk automation testing ataupun unit testing saja....
         }
         if(OtherConfig.getSmtpEnable().equals("y")){
             SendMailOTP.verifyRegisOTP("Verifikasi OTP Registrasi",//di harcode
@@ -129,7 +129,7 @@ public class AppUserDetailService implements UserDetailsService {
             );
         }
 
-        return ResponseEntity.ok().body(m);
+        return GlobalResponse.dataBerhasilDiregistrasi(m, request);
     }
 
     public ResponseEntity<Object> verifyRegis(User user, HttpServletRequest request) {
@@ -147,7 +147,7 @@ public class AppUserDetailService implements UserDetailsService {
         userNext.setRegistered(true);
         userNext.setModifiedBy(userNext.getId());
 
-        return ResponseEntity.status(HttpStatus.OK).body("Registrasi Berhasil");
+        return GlobalResponse.dataBerhasilDisimpan(request);
     }
 
     @Override
