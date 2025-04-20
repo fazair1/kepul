@@ -33,6 +33,39 @@
 
 	</properties>
 	<dependencies>
+		<!--        =================================UNIT TESTING===================================================-->
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>5.1.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.testng/testng -->
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>7.10.2</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.javafaker</groupId>
+			<artifactId>javafaker</artifactId>
+			<version>1.0.2</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<version>${project.parent.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- -DskipTests=true -->
+
+		<!--        TIBCO-->
+
 		<!--		START LIBRARY REPORT THYMELEAF -->
 		<!-- https://mvnrepository.com/artifact/com.itextpdf/html2pdf -->
 		<dependency>
@@ -152,12 +185,6 @@
 
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<version>${project.parent.version}</version>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 	<build>
