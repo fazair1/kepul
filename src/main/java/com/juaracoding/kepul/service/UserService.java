@@ -77,7 +77,7 @@ public class UserService implements IService<User> {
             );
         }
 
-        return GlobalResponse.dataBerhasilDisimpan(request);
+        return GlobalResponse.dataBerhasilDiregistrasi(m, request);
     }
 
     @Override
