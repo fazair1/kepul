@@ -67,10 +67,10 @@ public class DataGenerator {
         while(!isValid){
             try{
                 usrName = faker.name().username();
-                matcher = Pattern.compile("^[a-z\\.?]{7,15}$").matcher(usrName);
+                matcher = Pattern.compile("^([a-z0-9\\.]{4,20})$").matcher(usrName);
                 isValid = matcher.find();
                 if(intLoop==250){
-                    System.out.println("SUDAH MENCOBA MEMBUAT DATA Username SEBANYAK 15 KALI DAN GAGAL !!");
+                    System.out.println("SUDAH MENCOBA MEMBUAT DATA Username SEBANYAK 250 KALI DAN GAGAL !!");
                     System.exit(1);
                 }
                 intLoop++;
@@ -151,10 +151,10 @@ public class DataGenerator {
         while(!isValid){
             try{
                 namaLengkap = faker.name().fullName();
-                matcher = Pattern.compile("^[a-zA-Z\\s?]{6,45}$").matcher(namaLengkap);
+                matcher = Pattern.compile("^[a-zA-Z\\s]{4,50}$").matcher(namaLengkap);
                 isValid = matcher.find();
                 if(intLoop==250){
-                    System.out.println("SUDAH MENCOBA MEMBUAT DATA Nama Lengkap SEBANYAK 15 KALI DAN GAGAL !!");
+                    System.out.println("SUDAH MENCOBA MEMBUAT DATA Nama Lengkap SEBANYAK 250 KALI DAN GAGAL !!");
                     System.exit(1);
                 }
                 intLoop++;
@@ -307,9 +307,8 @@ public class DataGenerator {
         String password = "";
         while(!isValid){
             try{
-                password = faker.internet().password(8,15,true,true,true);
-//                matcher = Pattern.compile("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[_#\\-$])(?!.*?[^A-Za-z0-9_#\\-$]).{8,}$").matcher(password);
-                matcher = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@_#\\-$])[\\w].{8,15}$").matcher(password);
+                password = faker.internet().password(8,16,true,true,true);
+                matcher = Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d!@#$%^&*()_+=\\-\\.]{8,}$").matcher(password);
                 isValid = matcher.find();
 //                System.out.println(isValid);
                 if(intLoop==200){
