@@ -4,6 +4,7 @@
     <test name="Test-All">
         <classes>
             <class name="com.juaracoding.kepul.controller.AuthControllerTest"></class>
+            <class name="com.juaracoding.kepul.controller.UserControllerTest"></class>
         </classes>
     </test>
 </suite>

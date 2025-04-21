@@ -38,6 +38,12 @@ public class User implements UserDetails{
     @Column(name = "Nama" , length = 50, nullable = false)
     private String nama;
 
+    @OneToMany(mappedBy = "divisionId", orphanRemoval = false)
+    private List<Transaction> divisionTransactions;
+
+    @OneToMany(mappedBy = "adminId", orphanRemoval = false)
+    private List<Transaction> adminTransactions;
+
     @Column(name = "TanggalLahir")
     private LocalDate tanggalLahir;
 

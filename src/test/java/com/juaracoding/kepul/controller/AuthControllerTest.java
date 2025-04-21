@@ -14,7 +14,6 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -57,7 +56,8 @@ public class AuthControllerTest extends AbstractTestNGSpringContextTests {
                 request(Method.POST, "auth/login");
         int intResponse = response.getStatusCode();
         JsonPath jPath = response.jsonPath();
-        this.token = "Bearer "+jPath.getString("token");
+        Map<String,Object> data = jPath.getMap("data");
+        this.token = "Bearer "+data.get("token");
         if(intResponse != 200 || token==null){
             System.out.println("ADMIN USERNAME DAN PASSWORD TIDAK ADA, SISTEM AKAN DIHENTIKAN PROSES NYA");
             System.exit(0);

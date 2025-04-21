@@ -23,11 +23,13 @@ public class Transaction {
     private Status status;
 
     @ManyToOne
-    @JoinColumn(name = "IDDivision",nullable = false, foreignKey = @ForeignKey(name = "fk-transaction-to-user1"))
+    @JoinColumn(name = "IDDivision", nullable = false, foreignKey = @ForeignKey(name = "fk-transaction-to-user1"))
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private User divisionId;
 
     @ManyToOne
     @JoinColumn(name = "IDAdmin", foreignKey = @ForeignKey(name = "fk-transaction-to-user2"))
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private User adminId;
 
     @Column(name = "IsDeleted",columnDefinition = ("bit default 0"))

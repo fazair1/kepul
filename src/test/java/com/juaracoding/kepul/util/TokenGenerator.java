@@ -8,6 +8,8 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.json.simple.JSONObject;
 
+import java.util.Map;
+
 import static io.restassured.RestAssured.config;
 import static io.restassured.RestAssured.given;
 
@@ -53,8 +55,8 @@ public class TokenGenerator {
 
             int intResponse = response.getStatusCode();
             JsonPath jPath = response.jsonPath();
-//            System.out.println(jPath.get("object.nama").toString());
-            this.token = "Bearer "+jPath.get("token");//gunakan Bearer sebelum token
+            Map<String,Object> data = jPath.getMap("data");
+            this.token = "Bearer "+data.get("token");
             /** EXIT OTENTIKASI BERMASALAH
              * KARENA PERCUMA SAJA MELAKUKAN TESTING KALAU TIDAK MENDAPATKAN TOKEN
              */
