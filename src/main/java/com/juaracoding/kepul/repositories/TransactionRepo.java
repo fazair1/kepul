@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TransactionRepo extends JpaRepository<Transaction, Long> {
 
@@ -29,5 +30,7 @@ public interface TransactionRepo extends JpaRepository<Transaction, Long> {
     public Page<Transaction> cariStatus(String nama, Pageable pageable);
     @Query(value = "SELECT x FROM Transaction x WHERE lower(x.status.nama) LIKE lower(concat('%',?1,'%')) ")
     public List<Transaction> cariStatus(String nama);
+
+    public Optional<Transaction> findTopByOrderByIdDesc();
 
 }
