@@ -6,6 +6,8 @@
             <class name="com.juaracoding.kepul.controller.AuthControllerTest"></class>
             <class name="com.juaracoding.kepul.controller.UserControllerTest"></class>
             <class name="com.juaracoding.kepul.controller.TransactionControllerTest"></class>
+            <class name="com.juaracoding.kepul.controller.ProductCategoryControllerTest"></class>
+            <class name="com.juaracoding.kepul.controller.ProductControllerTest"></class>
 
         </classes>
     </test>
