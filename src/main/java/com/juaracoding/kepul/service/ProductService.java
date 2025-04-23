@@ -154,6 +154,14 @@ public class ProductService implements IService<Product>, IReport<Product> {
                 request);
     }
 
+    public ResponseEntity<Object> allProduct(HttpServletRequest request){
+        List<Product> list = null;
+        list = productRepo.findAllByIsDeletedFalse();
+        List<RepProductDTO> lt = convertToRepProductDTO(list);
+        return GlobalResponse.dataDitemukan(lt,
+                request);
+    }
+
     @Override
     public ResponseEntity<Object> findById(Long id, HttpServletRequest request) {
         Optional<Product> optionalProduct = null;
