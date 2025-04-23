@@ -186,7 +186,7 @@ public class TransactionService implements IService<Transaction>, IReport<Transa
             page = transactionRepo.findAllByIsDeletedFalse(pageable);
         }
         list = page.getContent();
-        List<RespTransactionDTO> lt = convertToRespTransactionDTO(list);
+        List<RepTransactionDTO> lt = convertToRepTransactionDTO(list);
 
         return GlobalResponse.dataDitemukan(transformPagination.transformPagination(lt,page,null,null),
                 request);
