@@ -279,7 +279,7 @@ public class TransactionService implements IService<Transaction>, IReport<Transa
             case "divisi": transactionList = transactionRepo.cariDivisi(value);break;
             case "admin": transactionList = transactionRepo.cariAdmin(value);break;
             case "status": transactionList = transactionRepo.cariStatus(value);break;
-            default: transactionList = transactionRepo.findAll();
+            default: transactionList = transactionRepo.findAllByIsDeletedFalse();
         }
 
         List<RepTransactionDTO> lt = convertToRepTransactionDTO(transactionList);

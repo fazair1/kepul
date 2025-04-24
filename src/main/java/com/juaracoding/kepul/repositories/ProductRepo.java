@@ -12,19 +12,19 @@ import java.util.Optional;
 
 public interface ProductRepo extends JpaRepository<Product, Long> {
 
-    public Page<Product> findByNamaContainsIgnoreCase(String nama, Pageable pageable);
-    public List<Product> findByNamaContainsIgnoreCase(String nama);
+    public Page<Product> findByNamaContainsIgnoreCaseAndIsDeletedFalse(String nama, Pageable pageable);
+    public List<Product> findByNamaContainsIgnoreCaseAndIsDeletedFalse(String nama);
 
-    public Page<Product> findByDeskripsiContainsIgnoreCase(String nama, Pageable pageable);
-    public List<Product> findByDeskripsiContainsIgnoreCase(String nama);
+    public Page<Product> findByDeskripsiContainsIgnoreCaseAndIsDeletedFalse(String nama, Pageable pageable);
+    public List<Product> findByDeskripsiContainsIgnoreCaseAndIsDeletedFalse(String nama);
 
     public Page<Product> findAllByIsDeletedFalse(Pageable pageable);
     public List<Product> findAllByIsDeletedFalse();
 
-    @Query(value = "SELECT x FROM Product x WHERE lower(x.productCategory.nama) LIKE lower(concat('%',?1,'%')) ")
+    @Query(value = "SELECT x FROM Product x WHERE lower(x.productCategory.nama) LIKE lower(concat('%',?1,'%')) AND x.isDeleted = false")
     public Page<Product> cariCategory(String nama, Pageable pageable);
 
-    @Query(value = "SELECT x FROM Product x WHERE lower(x.productCategory.nama) LIKE lower(concat('%',?1,'%')) ")
+    @Query(value = "SELECT x FROM Product x WHERE lower(x.productCategory.nama) LIKE lower(concat('%',?1,'%')) AND x.isDeleted = false")
     public List<Product> cariCategory(String nama);
 
     public Optional<Product> findTopByOrderByIdDesc();

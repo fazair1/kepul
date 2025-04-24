@@ -182,8 +182,8 @@ public class ProductService implements IService<Product>, IReport<Product> {
         Page<Product> page = null;
         List<Product> list = null;
         switch (columnName) {
-            case "nama": page = productRepo.findByNamaContainsIgnoreCase(value,pageable);break;
-            case "deskripsi": page = productRepo.findByDeskripsiContainsIgnoreCase(value,pageable);break;
+            case "nama": page = productRepo.findByNamaContainsIgnoreCaseAndIsDeletedFalse(value,pageable);break;
+            case "deskripsi": page = productRepo.findByDeskripsiContainsIgnoreCaseAndIsDeletedFalse(value,pageable);break;
             case "category": page = productRepo.cariCategory(value,pageable);break;
             default: page = productRepo.findAll(pageable);
         }
@@ -199,10 +199,10 @@ public class ProductService implements IService<Product>, IReport<Product> {
         Map<String,Object> mapToken = GlobalFunction.extractToken(request);
         List<Product> productList = null;
         switch (column){
-            case "nama": productList = productRepo.findByNamaContainsIgnoreCase(value);break;
-            case "deskripsi": productList = productRepo.findByDeskripsiContainsIgnoreCase(value);break;
+            case "nama": productList = productRepo.findByNamaContainsIgnoreCaseAndIsDeletedFalse(value);break;
+            case "deskripsi": productList = productRepo.findByDeskripsiContainsIgnoreCaseAndIsDeletedFalse(value);break;
             case "category": productList = productRepo.cariCategory(value);break;
-            default: productList = productRepo.findAll();
+            default: productList = productRepo.findAllByIsDeletedFalse();
         }
 
         List<RepProductDTO> lt = convertToRepProductDTO(productList);
