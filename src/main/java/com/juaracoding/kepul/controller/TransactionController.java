@@ -50,7 +50,7 @@ public class TransactionController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('Admin')")
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('Member')")
     public ResponseEntity<Object> findById(@PathVariable(value = "id") Long id, HttpServletRequest request) {
         return transactionService.findById(id, request);
     }
