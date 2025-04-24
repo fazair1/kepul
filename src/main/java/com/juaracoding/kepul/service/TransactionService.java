@@ -215,10 +215,10 @@ public class TransactionService implements IService<Transaction>, IReport<Transa
             case "divisi": page = transactionRepo.cariDivisi(value,pageable);break;
             case "admin": page = transactionRepo.cariAdmin(value,pageable);break;
             case "status": page = transactionRepo.cariStatus(value,pageable);break;
-            default: page = transactionRepo.findAll(pageable);
+            default: page = transactionRepo.findAllByIsDeletedFalse(pageable);
         }
         list = page.getContent();
-        List<RespTransactionDTO> lt = convertToRespTransactionDTO(list);
+        List<RepTransactionDTO> lt = convertToRepTransactionDTO(list);
 
         return GlobalResponse.dataDitemukan(transformPagination.transformPagination(lt,page,columnName,value),
                 request);

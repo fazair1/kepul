@@ -21,14 +21,14 @@ public interface TransactionRepo extends JpaRepository<Transaction, Long> {
     @Query(value = "SELECT x FROM Transaction x WHERE lower(x.divisionId.username) LIKE lower(concat('%',?1,'%')) AND x.isDeleted = false")
     public List<Transaction> cariDivisi(String nama);
 
-    @Query(value = "SELECT x FROM Transaction x WHERE lower(x.adminId.username) LIKE lower(concat('%',?1,'%')) ")
+    @Query(value = "SELECT x FROM Transaction x WHERE (lower(x.adminId.username) LIKE lower(concat('%',?1,'%')) OR x.adminId IS NULL) AND x.isDeleted = false")
     public Page<Transaction> cariAdmin(String nama, Pageable pageable);
-    @Query(value = "SELECT x FROM Transaction x WHERE lower(x.adminId.username) LIKE lower(concat('%',?1,'%')) ")
+    @Query(value = "SELECT x FROM Transaction x WHERE (lower(x.adminId.username) LIKE lower(concat('%',?1,'%')) OR x.adminId IS NULL) AND x.isDeleted = false")
     public List<Transaction> cariAdmin(String nama);
 
-    @Query(value = "SELECT x FROM Transaction x WHERE lower(x.status.nama) LIKE lower(concat('%',?1,'%')) ")
+    @Query(value = "SELECT x FROM Transaction x WHERE lower(x.status.nama) LIKE lower(concat('%',?1,'%')) AND x.isDeleted = false")
     public Page<Transaction> cariStatus(String nama, Pageable pageable);
-    @Query(value = "SELECT x FROM Transaction x WHERE lower(x.status.nama) LIKE lower(concat('%',?1,'%')) ")
+    @Query(value = "SELECT x FROM Transaction x WHERE lower(x.status.nama) LIKE lower(concat('%',?1,'%')) AND x.isDeleted = false")
     public List<Transaction> cariStatus(String nama);
 
     public Optional<Transaction> findTopByOrderByIdDesc();
