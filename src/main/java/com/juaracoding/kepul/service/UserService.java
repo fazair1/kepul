@@ -150,10 +150,18 @@ public class UserService implements IService<User> {
     @Override
     public ResponseEntity<Object> findAll(Pageable pageable, HttpServletRequest request) {
         Map<String,Object> mapToken = GlobalFunction.extractToken(request);
+        Optional<User> optionalUser = userRepo.findById(Long.parseLong(mapToken.get("userId").toString()));
+        User nextUser = optionalUser.get();
 
         Page<User> page = null;
         List<User> list = null;
-        page = userRepo.findAll(pageable);
+        if (nextUser.getAkses().getNama().equals("Member")) {
+            page = userRepo.findByUsernameContainsIgnoreCase(mapToken.get("username").toString(), pageable);
+        }
+        else {
+            page = userRepo.findAll(pageable);
+        }
+
 
         list = page.getContent();
         List<RespUserDTO> lt = convertToRespUserDTO(list);

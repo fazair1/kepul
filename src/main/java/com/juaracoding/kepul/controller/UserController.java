@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('Admin')")
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('Member')")
     public ResponseEntity<Object> findAll(HttpServletRequest request) {
         Pageable pageable = PageRequest.of(0, OtherConfig.getPageDefault(), Sort.by("id"));
 
@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('Admin')")
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('Member')")
     public ResponseEntity<Object> findById(@PathVariable(value = "id") Long id, HttpServletRequest request) {
         return userService.findById(id, request);
     }
