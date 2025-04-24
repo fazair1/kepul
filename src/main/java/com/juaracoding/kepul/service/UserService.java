@@ -4,6 +4,7 @@ import com.juaracoding.kepul.config.OtherConfig;
 import com.juaracoding.kepul.core.IService;
 import com.juaracoding.kepul.dto.response.RespTransactionDTO;
 import com.juaracoding.kepul.dto.response.RespUserDTO;
+import com.juaracoding.kepul.dto.validation.ValEditUserDTO;
 import com.juaracoding.kepul.dto.validation.ValRegisDTO;
 import com.juaracoding.kepul.dto.validation.ValUserDTO;
 import com.juaracoding.kepul.handler.GlobalResponse;
@@ -60,6 +61,10 @@ public class UserService implements IService<User> {
         if(!optUser.isPresent()){
             user.setPassword(BcryptImpl.hash(user.getUsername()+user.getPassword()));
             user.setOtp(BcryptImpl.hash(String.valueOf(intOtp)));
+            Akses akses = new Akses();
+            akses.setId(2L);//default untuk relasi nya ke akses, jadi user yang melakukan registrasi otomatis mendapatkan akses sebagai member
+            user.setAkses(akses);
+
             userRepo.save(user);
             m.put("email",user.getEmail());
         }else{
@@ -102,9 +107,11 @@ public class UserService implements IService<User> {
 
             if (currUser.getAkses().getNama().equals("Admin")) {
                 userNext.setAkses(user.getAkses());
+
+                userNext.setRegistered(user.getRegistered());
             }
             if (!user.getPassword().isEmpty()) {
-                userNext.setPassword(user.getUsername()+user.getPassword());
+                userNext.setPassword(BcryptImpl.hash(user.getUsername()+user.getPassword()));
             }
             userNext.setModifiedBy(Long.parseLong(mapToken.get("userId").toString()));
             userNext.setModifiedDate(now);
@@ -191,6 +198,10 @@ public class UserService implements IService<User> {
 
     public User convertToEntity (ValUserDTO valUserDTO) {
         return modelMapper.map(valUserDTO, User.class);
+    }
+
+    public User convertToEntity (ValEditUserDTO valEditUserDTO) {
+        return modelMapper.map(valEditUserDTO, User.class);
     }
 
     public List<RespUserDTO> convertToRespUserDTO (List<User> users) {

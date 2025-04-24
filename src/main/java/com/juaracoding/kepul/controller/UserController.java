@@ -1,6 +1,7 @@
 package com.juaracoding.kepul.controller;
 
 import com.juaracoding.kepul.config.OtherConfig;
+import com.juaracoding.kepul.dto.validation.ValEditUserDTO;
 import com.juaracoding.kepul.dto.validation.ValRegisDTO;
 import com.juaracoding.kepul.dto.validation.ValTransactionDTO;
 import com.juaracoding.kepul.dto.validation.ValUserDTO;
@@ -31,8 +32,8 @@ public class UserController {
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('Admin') or hasAuthority('Member')")
     public ResponseEntity<Object> update(@PathVariable(value = "id") Long id,
-                                         @Valid @RequestBody ValUserDTO valUserDTO, HttpServletRequest request) {
-        return userService.update(id, userService.convertToEntity(valUserDTO), request);
+                                         @Valid @RequestBody ValEditUserDTO valEditUserDTO, HttpServletRequest request) {
+        return userService.update(id, userService.convertToEntity(valEditUserDTO), request);
     }
 
     @DeleteMapping("/{id}")
