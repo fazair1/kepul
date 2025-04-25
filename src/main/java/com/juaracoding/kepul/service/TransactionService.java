@@ -132,6 +132,7 @@ public class TransactionService implements IService<Transaction>, IReport<Transa
                 nextTransaction.setLtProduct(transaction.getLtProduct());
             }
             if (transaction.getStatus().getNama().equals("Approved") && nextUser.getAkses().getNama().equals("Admin")) {
+                nextTransaction.setLtProduct(transaction.getLtProduct());
                 nextTransaction.setAdminId(nextUser);
                 nextTransaction.setStatus(transaction.getStatus());
 
