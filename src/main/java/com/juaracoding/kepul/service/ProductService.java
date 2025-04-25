@@ -185,7 +185,7 @@ public class ProductService implements IService<Product>, IReport<Product> {
             case "nama": page = productRepo.findByNamaContainsIgnoreCaseAndIsDeletedFalse(value,pageable);break;
             case "deskripsi": page = productRepo.findByDeskripsiContainsIgnoreCaseAndIsDeletedFalse(value,pageable);break;
             case "category": page = productRepo.cariCategory(value,pageable);break;
-            default: page = productRepo.findAll(pageable);
+            default: page = productRepo.findAllByIsDeletedFalse(pageable);
         }
         list = page.getContent();
         List<RespProductDTO> lt = convertToRespProductDTO(list);
