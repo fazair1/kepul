@@ -3,7 +3,9 @@ package com.juaracoding.kepul.service;
 import com.juaracoding.kepul.config.OtherConfig;
 import com.juaracoding.kepul.core.IReport;
 import com.juaracoding.kepul.core.IService;
+import com.juaracoding.kepul.dto.relation.RelProductCategoryDTO;
 import com.juaracoding.kepul.dto.report.RepProductDTO;
+import com.juaracoding.kepul.dto.report.RepTransactionDTO;
 import com.juaracoding.kepul.dto.response.RespProductCategoryDTO;
 import com.juaracoding.kepul.dto.response.RespProductDTO;
 import com.juaracoding.kepul.dto.validation.ValProductDTO;
@@ -149,6 +151,13 @@ public class ProductService implements IService<Product>, IReport<Product> {
         page = productRepo.findAllByIsDeletedFalse(pageable);
         list = page.getContent();
         List<RespProductDTO> lt = convertToRespProductDTO(list);
+
+        RespProductDTO respProductDTO = new RespProductDTO();
+        RelProductCategoryDTO relProductCategoryDTO = new RelProductCategoryDTO();
+        respProductDTO.setProductCategory(relProductCategoryDTO);
+        if (lt.isEmpty()) {
+            lt.add(respProductDTO);
+        }
 
         return GlobalResponse.dataDitemukan(transformPagination.transformPagination(lt,page,null,null),
                 request);

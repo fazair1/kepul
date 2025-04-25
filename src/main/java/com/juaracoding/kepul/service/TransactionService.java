@@ -188,7 +188,9 @@ public class TransactionService implements IService<Transaction>, IReport<Transa
         }
         list = page.getContent();
         List<RepTransactionDTO> lt = convertToRepTransactionDTO(list);
-
+        if (lt.isEmpty()) {
+            lt.add(new RepTransactionDTO());
+        }
         return GlobalResponse.dataDitemukan(transformPagination.transformPagination(lt,page,null,null),
                 request);
     }
