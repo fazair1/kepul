@@ -174,7 +174,7 @@ public class ProductService implements IService<Product>, IReport<Product> {
             LoggingFile.logException("ProductService","findById(Long id, HttpServletRequest request) -- Line 156 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
             return GlobalResponse.terjadiKesalahan("KPL02FE042",request);
         }
-        return GlobalResponse.dataDitemukan(modelMapper.map(optionalProduct.get(),RespProductCategoryDTO.class),request);
+        return GlobalResponse.dataDitemukan(modelMapper.map(optionalProduct.get(),RespProductDTO.class),request);
     }
 
     @Override

@@ -2,9 +2,11 @@ package com.juaracoding.kepul.service;
 
 import com.juaracoding.kepul.config.OtherConfig;
 import com.juaracoding.kepul.core.IService;
+import com.juaracoding.kepul.dto.report.RepProductDTO;
 import com.juaracoding.kepul.dto.response.RespProductCategoryDTO;
 import com.juaracoding.kepul.dto.validation.ValProductCategoryDTO;
 import com.juaracoding.kepul.handler.GlobalResponse;
+import com.juaracoding.kepul.model.Product;
 import com.juaracoding.kepul.model.ProductCategory;
 import com.juaracoding.kepul.repositories.ProductCategoryRepo;
 import com.juaracoding.kepul.repositories.ProductRepo;
@@ -128,6 +130,14 @@ public class ProductCategoryService implements IService<ProductCategory> {
         return GlobalResponse.dataDitemukan(transformPagination.transformPagination(lt,page,null,null),
                 request);
     }
+
+//    public ResponseEntity<Object> allProductCategory(HttpServletRequest request){
+//        List<ProductCategory> list = null;
+//        list = productCategoryRepo.findAll();
+//        List<RepProductDTO> lt = convertToRepProductDTO(list);
+//        return GlobalResponse.dataDitemukan(lt,
+//                request);
+//    }
 
     @Override
     public ResponseEntity<Object> findById(Long id, HttpServletRequest request) {

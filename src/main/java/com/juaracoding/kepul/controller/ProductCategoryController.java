@@ -48,6 +48,12 @@ public class ProductCategoryController {
         return productCategoryService.findAll(pageable, request);
     }
 
+//    @GetMapping("/all")
+//    @PreAuthorize("hasAuthority('Admin') or hasAuthority('Member')")
+//    public ResponseEntity<Object> allProduct(HttpServletRequest request){
+//        return productCategoryService.allProductCategory(request);
+//    }
+
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<Object> findById(@PathVariable(value = "id") Long id, HttpServletRequest request) {
