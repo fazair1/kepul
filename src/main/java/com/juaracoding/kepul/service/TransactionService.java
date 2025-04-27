@@ -295,14 +295,14 @@ public class TransactionService implements IService<Transaction>, IReport<Transa
         Map<String,Object> map = new HashMap<>();// ini untuk menampung seluruh data yang akan di oper ke file html
         String strHtml = null;
         Context context = new Context();
-        map.put("title","REPORT GROUP MENU");
+        map.put("title","REPORT REQUEST");
         map.put("timestamp", LocalDateTime.now());
         map.put("totalData",lt.size());
         map.put("listContent",lt);
         map.put("username",mapToken.get("namaLengkap"));
         context.setVariables(map);
         strHtml = springTemplateEngine.process("/report/transactionreport",context);
-        pdfGenerator.htmlToPdf(strHtml,"group-menu",response);
+        pdfGenerator.htmlToPdf(strHtml,"request",response);
 
     }
 

@@ -87,6 +87,11 @@ public class AppUserDetailService implements UserDetailsService {
          */
         int intOtp = random.nextInt(111111,999999);
         if(!optUser.isPresent()){
+            Optional<User> optCheckEmailUser = userRepo.findByEmailAndIsRegistered(user.getEmail(),true);
+            if(optCheckEmailUser.isPresent()){
+                return GlobalResponse.emailTeregistrasi("AUT00FV012", request);
+            }
+
             user.setPassword(BcryptImpl.hash(user.getUsername()+user.getPassword()));
             user.setOtp(BcryptImpl.hash(String.valueOf(intOtp)));
             Akses akses = new Akses();
